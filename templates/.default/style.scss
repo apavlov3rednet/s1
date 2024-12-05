@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+$mainColor: #fc8507;
+$subColor: #ffa218;
+$addColor: #30b25d;
+$blackColor: #333;
+$fontSize: 16px;
+$mainFont: "Oswald", sans-serif;
+$secondFont: "Roboto", sans-serif;
+
+.form {
+    font-family: $secondFont;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap:30px;
+    max-width:1024px;
+    margin:30px auto;
+
+    &-area {
+        display:flex;
+        flex-wrap:wrap;
+        
+        h4 {
+            margin-top:0;
+            font: {
+                family: $mainFont;
+                size: $fontSize * 2;
+                weight: bold;
+            }
+            width:100%;
+        }
+
+        label {
+            width:100%;
+            position:relative;
+            overflow: hidden;
+
+            &.hidden {
+                display:none;
+            }
+
+            &.stars {
+                margin-bottom:20px;
+            }
+
+            textarea {
+                width:calc(100% - 20px);
+                resize: none;
+                height: 24px;
+                padding: 30px 10px 10px 10px;
+                transition: height .3s;
+                border:none;
+                background:#eee;
+                border-radius:5px;
+            }
+
+            textarea + span {
+                font-size: $fontSize;
+                position: absolute;
+                top:10px;
+                left:10px;
+                color: #888;
+                transition: font-size .3s;
+            }
+
+            textarea:focus {
+                height: 100px;
+                padding-top: 30px;
+                outline:none;
+
+                & + span {
+                    font-size: $fontSize - 4px;
+                }
+            }
+
+            input[type=checkbox] {
+                display:none;
+            }
+
+            input[type=checkbox] + span {
+                position:relative;
+                line-height: 36px;
+                padding-left: 40px;
+                margin: 15px 0;
+                display:block;
+            }
+
+            input[type=checkbox] + span::after {
+                content: "";
+                position:absolute;
+                width: 24px;
+                height: 24px;
+                border: 1px solid $blackColor;
+                top: 5px;
+                left:5px;
+                z-index: 1;
+            }
+
+            input[type=checkbox]:checked + span::after {
+                border: 1px solid $mainColor;
+            }
+
+            input[type=checkbox]:checked + span::before {
+                content: "";
+                top:9px;
+                left:8px;
+                position: absolute;
+                border: {
+                    left: 5px solid $mainColor;
+                    bottom: 5px solid $mainColor;
+                }
+                width: 16px;
+                height: 8px;
+                z-index: 10;
+                transform: rotate(310deg);
+            }
+        }
+
+        .file-upload {
+            display:block;
+            width:100%;
+            height:150px;
+            border:2px dashed #999;
+            border-radius:10px;
+            position:relative;
+
+            &:before {
+                content: "Нажмите на поле или перетащите сюда файлы для загрузки";
+                color:#ccc;
+                width:fit-content;
+                height: fit-content;
+                margin: auto;
+                position: absolute;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+            }
+        
+
+            input {
+                border:1px solid red;
+                width:100%;
+                height:100%;
+                opacity:0;
+            }
+        }
+
+        button {
+            display:block;
+            width: 200px;
+            height: 36px;
+            background: linear-gradient($mainColor, $subColor);
+            border: 1px solid $mainColor;
+            border-radius: 5px;
+            color: $blackColor;
+            font-weight: bold;
+            margin-top:10px;
+        }
+    }
+
+    &-status {
+        position:relative;
+        background-color: #f7f7f7;
+        padding:20px;
+        border-radius:10px;
+
+        > span {
+            font-size: $fontSize - 4px;
+        } 
+
+        ul {
+            list-style: none;
+            padding:0;
+
+
+            li {
+                padding:0;
+                margin:0;
+                line-height:36px;
+                display: flex;
+                align-items: center;
+
+                &::before {
+                    content: "";
+                    width:20px;
+                    height:20px;
+                    background:#eee;
+                    border-radius:10px;
+                    display:inline-block;
+                    margin-right: 10px;
+                }
+
+                span {
+                    font-size:$fontSize - 6px;
+                    color: $addColor;
+                    margin-left:10px;
+                }
+            }
+        }
+    }
+
+}
