@@ -6,9 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    
-    <form class="form" action="" method="post">
+<body>    
+    <form enctype='multipart/form-data' class="form" action="" method="post">
         <div class="form-area">
             <h4 class="from-area-header">Ваш отзыв</h4>
 
