@@ -1,6 +1,8 @@
 <?php
 
-use Dbase;
+require_once($_SERVER['DOCUMENT_ROOT'] . '/core/Dbase.php');
+
+use Core\Dbase;
 
 class Install {
 
@@ -10,10 +12,15 @@ class Install {
 
     public function run() : void
     {
-        $db = new Dbase();
+        $installFile = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/core/.settings.php');
+        $sql = file_get_contents(__DIR__ . '/install.sql');
+        
+        echo '<pre>';
+        print_r($installFile);
+        echo '</pre>';
 
-        $installFile = file_get_contents(__DIR__ . '/install.sql');
-        $db->runMethod($installFile);
+        $db = new Dbase($installFile);
+        $db->runMethod($sql);
     }
 
     public function setDbParams(array $options): void {
@@ -23,12 +30,15 @@ class Install {
             $setting .= "'host' => '".$options['host']."',";
         }
             
-        if($options['user']) {
-            $setting .= "'user' => '".$options['user']."',";
+        if($options['login']) {
+            $setting .= "'user' => '".$options['login']."',";
         }
 
         if($options['password']) {
             $setting .= "'password' => '".$options['password']."',";
+        }
+        else {
+            $setting .= "'password' => '',";
         }
 
         if($options['database']) {
@@ -54,12 +64,7 @@ class Install {
 }
 
 $install = new Install();
-$install->setDbParams([
-    'host' => 'MySQL-8.0',
-    'database' => 'groupseven',
-    'login' => 'root',
-    'password' => '',
-]);
+$install->setDbParams($_POST);
 $install->setBaseParams();
 //$install->setAddParams();
 $install->run();

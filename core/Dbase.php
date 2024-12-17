@@ -1,4 +1,5 @@
 <?php
+namespace Core;
 
 use PDO;
 use PDOException;
@@ -15,18 +16,25 @@ class Dbase
 
     public $settings;
 
-    public function __construct(string $dbname = 'default')
+    public function __construct(array $options)
     {
-        $this->host = '';
-        $this->user = '';
-        $this->password = '';
-        $this->database = '';
+        //ip = 127.127.126.26
+        //port = 3306
+        //
+        $this->host = $options['host'];
+        $this->user = $options['login'];
+        $this->password = $options['password'];
+        $this->database = $options['database'];
 
         $this->connect();
     }
 
     public function runMethod(string $sql): void {
         try {
+            echo '<pre>';
+            print_r($sql);
+            echo '</pre>';
+
             $request = $this->conn->prepare($sql);
             //Обработка ответа
             $request->execute();

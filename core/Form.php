@@ -1,5 +1,7 @@
 <?php
 
+use Dbase;
+
 class Form extends Dbase {
     
     public function __construct() {
@@ -13,6 +15,6 @@ class Form extends Dbase {
     }
 
     public function save(): void {
-        $this->uploadFile()
+        $this->uploadFile();
     }
 }
