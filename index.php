@@ -7,6 +7,19 @@
 </head>
 <body>
 
+<?php if(isset($_GET['success'])):?>
+    Модуль успешно установлен
+
+    <?php
+    //Удалить файл с сервера после успешной установки
+    //unlink('/install/install.php');
+    ?>
+<?php endif;?>
+
+<?php if(isset($_GET['error'])):?>
+    Ошибка установки модуля: <?=$_GET['error']?>
+<?php endif;?>
+
 <form action="/install/install.php" method="POST">
     <label><span>host</span>
     <input type="text" name="host">

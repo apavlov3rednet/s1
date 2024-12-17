@@ -22,25 +22,23 @@ class Dbase
         //port = 3306
         //
         $this->host = $options['host'];
-        $this->user = $options['login'];
+        $this->user = $options['user'];
         $this->password = $options['password'];
         $this->database = $options['database'];
 
         $this->connect();
     }
 
-    public function runMethod(string $sql): void {
+    public function runMethod(string $sql): mixed {
         try {
-            echo '<pre>';
-            print_r($sql);
-            echo '</pre>';
-
             $request = $this->conn->prepare($sql);
             //Обработка ответа
             $request->execute();
+            return true;
             
         } catch (PDOException $e) {
             //Logs::add2Log('Query get list fail: ' . $e->getMessage()); 
+            return $e->getMessage();
         }
     }
 

@@ -11,6 +11,8 @@
         <div class="form-area">
             <h4 class="from-area-header">Ваш отзыв</h4>
 
+            <input type="hidden" name="ELEMENT_ID" value="<?=$arParams['ELEMENT_ID']?>">
+
             <label for="VOTE_NAME_FIELD" class="stars"> <!-- VOTE_NAME_FIELD - динамическая переменная -->
                 <span>Общая оценка</span>
                 <input type="radio" name="VOTE_NAME_FIELD" value="1">

@@ -12,42 +12,46 @@ class Install {
 
     public function run() : void
     {
-        $installFile = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/core/.settings.php');
+        $installFile = require($_SERVER['DOCUMENT_ROOT'] . '/core/.settings.php');
         $sql = file_get_contents(__DIR__ . '/install.sql');
-        
-        echo '<pre>';
-        print_r($installFile);
-        echo '</pre>';
 
         $db = new Dbase($installFile);
-        $db->runMethod($sql);
+        $result = $db->runMethod($sql);
+
+        if($result) {
+            header("Location: /index.php?success=Y");
+        }
+        else {
+            header("Location: /index.php?error=".$result);
+        }
     }
 
     public function setDbParams(array $options): void {
-        $setting = '<?php return [';
+
+        $setting = 'return [' . PHP_EOL;
 
         if($options['host']) {
-            $setting .= "'host' => '".$options['host']."',";
+            $setting .= "'host' => '".$options['host']."'," . PHP_EOL;
         }
             
         if($options['login']) {
-            $setting .= "'user' => '".$options['login']."',";
+            $setting .= "'user' => '".$options['login']."'," . PHP_EOL;
         }
 
         if($options['password']) {
-            $setting .= "'password' => '".$options['password']."',";
+            $setting .= "'password' => '".$options['password']."'," . PHP_EOL;
         }
         else {
-            $setting .= "'password' => '',";
+            $setting .= "'password' => ''," . PHP_EOL;
         }
 
         if($options['database']) {
-            $setting .= "'database' => '".$options['database']."',";
+            $setting .= "'database' => '".$options['database']."'," . PHP_EOL;
         }
 
         $setting .= '];';
 
-        $file = $_SERVER['DOCUMENT_ROOT'] . '/core/.settings.php';
+        $file = $_SERVER['DOCUMENT_ROOT'] . '/core/.settings.json';
         file_put_contents($file, $setting);
     }
 
