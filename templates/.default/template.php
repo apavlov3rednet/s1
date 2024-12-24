@@ -33,7 +33,7 @@
             </label>
 
             <label for="COMMENT">
-                <textarea name="COMMENT"></textarea>
+                <textarea required name="COMMENT"></textarea>
                 <span>Комментарий</span>
             </label>
             <input type="hidden" name="NOT_EQUALE" value="N">
