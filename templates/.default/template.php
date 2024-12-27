@@ -1,26 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>    
+
     <form enctype='multipart/form-data' class="form" action="" method="post">
         <div class="form-area">
             <h4 class="from-area-header">Ваш отзыв</h4>
 
             <input type="hidden" name="ELEMENT_ID" value="<?=$arParams['ELEMENT_ID']?>">
 
-            <label for="VOTE_NAME_FIELD" class="stars"> <!-- VOTE_NAME_FIELD - динамическая переменная -->
-                <span>Общая оценка</span>
-                <input type="radio" name="VOTE_NAME_FIELD" value="1">
-                <input type="radio" name="VOTE_NAME_FIELD" value="2">
-                <input type="radio" name="VOTE_NAME_FIELD" value="3">
-                <input type="radio" name="VOTE_NAME_FIELD" value="4">
-                <input type="radio" name="VOTE_NAME_FIELD" value="5">
-            </label>
+            <?php foreach($arResult['FORM_STARS'] as $key => $name):?>           
+                <label for="<?=$key?>" class="stars">
+                    <span><?=$name?></span>
+                    <input type="radio" name="<?=$key?>" value="1">
+                    <input type="radio" name="<?=$key?>" value="2">
+                    <input type="radio" name="<?=$key?>" value="3">
+                    <input type="radio" name="<?=$key?>" value="4">
+                    <input type="radio" name="<?=$key?>" value="5">
+                </label>
+            <?php endforeach;?>
 
             <label for="PREFERENCES">
                 <textarea name="PREFERENCES"></textarea>
@@ -50,7 +44,6 @@
             <div class="file-upload">
                 <input type="file" name="FILE" multiple="Y">
             </div>
-            
 
             <button>Отправить</button>
         </div>
@@ -68,10 +61,3 @@
             </ul>
         </div>
     </form>
-
-
-
-
-
-</body>
-</html>

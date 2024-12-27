@@ -3,6 +3,10 @@
 //C:\OSPanel\home\s1\upload\voteform
 $uploaddir = $_SERVER['DOCUMENT_ROOT']. '/upload/voteform/';
 
+echo '<pre>';
+print_r($_FILES);
+echo '</pre>';
+
 function createFileName($filename): string {
     $ext = explode('.', $filename)[1];
     return md5($filename . rand(10,20) . time()) . '.' . $ext;
@@ -24,9 +28,7 @@ function checkFileType(string $mime, string $accessType = 'image'): bool {
 }
 
 function registerUploadFile(array $file):int {
-    echo '<pre>';
-    print_r($file);
-    echo '</pre>';
+    //$id = DBase::add('b_files', $file);
 
     return 10;
 }

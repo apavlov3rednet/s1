@@ -61,6 +61,7 @@ class Dbase
 
     private function prepareFilter($arFilter, &$sql, &$filter, &$execute) {
         if (!empty($arFilter)) {
+            //todo: переписать на работу с поиском по массиву данных
             foreach ($arFilter as $key => $value) {
                 $filter[] = $key . ' = ?';
                 $execute[] = $value;
