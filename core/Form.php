@@ -1,4 +1,6 @@
 <?php
+namespace Core;
+
 require __DIR__ ."/Dbase.php";
 
 use Core\Dbase;
@@ -10,16 +12,18 @@ class Form extends Dbase {
     private array $arFields;
     private array $arStarList;
     
-    public function __construct($starList = []) {
-        parent::__construct();
+    public function __construct(array $params, array $starList) {
+        parent::__construct($params);
 
         $this->uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/upload/voteform/';
         $this->arStarList = $starList;
     }
 
     private function createFileName($filename):string {
-        $ext = end(explode('.', $filename, PHP_INT_MAX));
-        return md5($filename . rand(10,20) . time()) . '.' . $ext;
+        if($filename) {
+            $ext = end(explode('.', $filename));
+            return md5($filename . rand(10,20) . time()) . '.' . $ext;
+        }
     }
 
     private function checkFileType(string $mime, string $accessType = 'image'): bool {
@@ -115,7 +119,7 @@ class Form extends Dbase {
     public function save(): mixed {
         $this->prepareFields();
 
-        if(empty($this->arErrorFields)) {
+        if(empty($this->arErrorFields) && !empty($this->arFields['FILES'])) {
             $this->uploadFile();
             $this->arFields['FILES'] = join(',', $this->arFiles);
         }

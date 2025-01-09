@@ -1,5 +1,4 @@
-
-    <form enctype='multipart/form-data' class="form" action="" method="post">
+   <form enctype='multipart/form-data' class="form" action="" method="post">
         <div class="form-area">
             <h4 class="from-area-header">Ваш отзыв</h4>
 
@@ -45,7 +44,7 @@
                 <input type="file" name="FILE" multiple="Y">
             </div>
 
-            <button>Отправить</button>
+            <input type="submit" name="SAVE" value="Сохранить"/>
         </div>
 
         <div class="form-status">

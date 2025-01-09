@@ -1,6 +1,6 @@
 <?php
 
-$arParams = [
+return $arParams = [
     'TEMPLATE' => [
         'TYPE' => 'LIST',
         'REQUIRED' => true,
@@ -10,7 +10,7 @@ $arParams = [
             'test' => 'test'
         ],
         'DEFAULT' => '.default'
-    ]
+    ],
     'ELEMENT_ID' => [
         'TYPE' => 'INTEGER',
         'REQUIRED' => true,
