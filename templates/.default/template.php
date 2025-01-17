@@ -1,8 +1,9 @@
-   <form enctype='multipart/form-data' class="form" action="" method="post">
+   <form enctype='multipart/form-data' class="form" action="" method="post" id="voteForm">
         <div class="form-area">
             <h4 class="from-area-header">Ваш отзыв</h4>
 
             <input type="hidden" name="ELEMENT_ID" value="<?=$arParams['ELEMENT_ID']?>">
+            <input type="hidden" name="USER_ID" value='1'/>
 
             <?php foreach($arResult['FORM_STARS'] as $key => $name):?>           
                 <label for="<?=$key?>" class="stars">
@@ -35,13 +36,13 @@
                 <span>Товар или комплектация не соответствует описанию на сайте</span>
             </label>
 
-            <label for="NOT_EQUALE_TEXT" class="hidden">
+            <label id="NOT_EQUALE_TEXT" for="NOT_EQUALE_TEXT" class="hidden">
                 <textarea name="NOT_EQUALE_TEXT"></textarea>
                 <span>Опишите проблему</span>
             </label>
 
             <div class="file-upload">
-                <input type="file" name="FILE" multiple="Y">
+                <input type="file" name="FILE[]" multiple="Y">
             </div>
 
             <input type="submit" name="SAVE" value="Сохранить"/>
@@ -52,11 +53,13 @@
 
             <p>Проставьте оценки</p>
             <ul class="checklist">
-                <li>Проставьте оценки <span>+20%</span></li>
-                <li>Опишите достоинства <span>+20%</span></li>
-                <li>Опишите недостатки <span>+20%</span></li>
-                <li>Добавьте комментарий <span>+20%</span></li>
-                <li>Добавьте фото <span>+20%</span></li>
+                <li data-name="marks">Проставьте оценки <span>+20%</span></li>
+                <li data-name="PREFERENCES">Опишите достоинства <span>+20%</span></li>
+                <li data-name="NEGATIVE">Опишите недостатки <span>+20%</span></li>
+                <li data-name="COMMENT">Добавьте комментарий <span>+20%</span></li>
+                <li data-name="files">Добавьте фото <span>+20%</span></li>
             </ul>
+
+            <div class="progressbar"></div>
         </div>
     </form>

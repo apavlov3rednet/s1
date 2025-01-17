@@ -98,11 +98,11 @@ class Component {
             $arUsersId[] = $arReview['USER_ID']; 
         }
 
-        $arUsersId = array_unique($arUsersId);
+        $arUsersId = array_unique($arUsersId); // [1,1,1,12,12,3,5,7]
 
         $arUsers = $db->getList('b_users', [
             'select' => ['ID', 'LOGIN'],
-            'filter' => ['ID' => $arUsersId]
+            'filter' => ['ID' =>join(', ',$arUsersId)]
         ]);
 
         $this->arResult['REVIEWS'] = $arReviews;

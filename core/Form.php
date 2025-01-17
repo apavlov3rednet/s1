@@ -11,6 +11,7 @@ class Form extends Dbase {
     private array $arErrorFields;
     private array $arFields;
     private array $arStarList;
+    private array $arStars;
     
     public function __construct(array $params, array $starList) {
         parent::__construct($params);
@@ -99,7 +100,8 @@ class Form extends Dbase {
         $POST = $_POST;
 
         $arTextFieldsKey = ['PREFERENCES', 'NEGATIVE', 'COMMENT', 'NOT_EQUALE_TEXT'];
-        $arStarsFieldsKey = ['VOTE_NAME_FIELD']; //todo: переписать на динамический параметр
+        $arStarsFieldsKey = array_keys($this->arStarList);
+        $arStars = [];
 
         foreach($POST as $key => $value) {
             if(in_array($key, $arTextFieldsKey)) {
@@ -107,9 +109,11 @@ class Form extends Dbase {
             }
 
             if(in_array($key, $arStarsFieldsKey)) {
-                $this->arFields[$key] = (int)$value; //(string), (int), (float) === string(), intval($), floatval()
+                $this->arStars[$key] = (int)$value; //(string), (int), (float) === string(), intval($), floatval()
             }
         }
+        $this->arFields['USER_ID'] = (int)$POST['USER_ID'];
+        $this->arFields['ELEMENT_ID'] = (int)$POST['ELEMENT_ID'];
     }
 
     private function showErrors() {
@@ -117,9 +121,10 @@ class Form extends Dbase {
     }
 
     public function save(): mixed {
+        $totalMark = 0;
         $this->prepareFields();
 
-        if(empty($this->arErrorFields) && !empty($this->arFields['FILES'])) {
+        if(empty($this->arErrorFields) && !empty($_FILES)) {
             $this->uploadFile();
             $this->arFields['FILES'] = join(',', $this->arFiles);
         }
@@ -129,7 +134,26 @@ class Form extends Dbase {
             return false;
         }
 
+        foreach($this->arStars as $code => $value) {
+            $totalMark += $value; //каждый раз увеличивает на значение $value
+        }
+
+        $this->arFields['TOTAL_MARK'] = round($totalMark/count($this->arStars), 1);
+
         $id = $this->add('b_review', $this->arFields);
+
+        if($id > 0 && !empty($this->arStars)) {
+            foreach($this->arStars as $code => $value) {
+                $this->add('b_review_props', [
+                    'REVIEW_ID' => $id,
+                    'MARK' => $value,
+                    'CODE' => $code
+                ]);
+            }
+            //вот здесь было бы
+            //$this->update
+        }
+        
         return $id;
     }
 }

@@ -133,6 +133,7 @@ class Dbase
         $result = [];
         try {
             $request = $this->conn->prepare($sql);
+
             $request->execute($execute);
 
             $response = $request->fetchAll(PDO::FETCH_ASSOC);
