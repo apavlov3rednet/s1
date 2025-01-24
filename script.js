@@ -70,10 +70,22 @@ class Form {
                 });
             }
 
-            
+            this.Count();
         });
     }
 
-    
+    Count() {
+        let obProgress = this.obForm.querySelector('.progressbar');
+        let active = this.obForm.querySelectorAll('li.active');
+        let size = 0;
+        if(active.length > 0) {
+            size = active.length * 20;
+        }
+
+        obProgress.removeAttribute('class');
+        obProgress.classList.add('progressbar');
+        obProgress.classList.add('size-'+size);
+    }
 }
 new Form();
+

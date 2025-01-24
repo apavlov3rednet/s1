@@ -74,7 +74,8 @@ $secondFont: "Roboto", sans-serif;
                 }
             }
 
-            input[type=checkbox] {
+            input[type=checkbox],
+            input[type=radio] {
                 display:none;
             }
 
@@ -247,5 +248,43 @@ $secondFont: "Roboto", sans-serif;
             }
         }
         $i: $i + 20;
+    }
+}
+
+.reviews {
+    display:block;
+    max-width: 800px;
+    margin: 20px auto;
+
+    .item {
+        display:block;
+        padding:15px;
+        margin:10px 0;
+        border:1px solid #999;
+        border-radius:3px;
+
+        .text {
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+            h3 {
+                font-size:16px;
+                margin:10px auto 5px 0;
+            }
+
+            div {
+                font-size:12px;
+                font-weight: 300;
+            }
+        }
+        .files {
+            margin-top:10px;
+            img {
+                cursor:pointer;
+            }
+        }
+        
+
+
     }
 }

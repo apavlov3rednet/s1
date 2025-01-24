@@ -3,6 +3,7 @@
 namespace Templates;
 
 use Core\Form;
+use Core\Core;
 
 
 class Component {
@@ -95,14 +96,40 @@ class Component {
 
         $arUsersId = [];
         foreach($arReviews as $key => $arReview) {
-            $arUsersId[] = $arReview['USER_ID']; 
+            $arUsersId[] = $arReview['USER_ID'];
+            $arReviews[$key]['MARKS'] = $db->getList('b_review_props', [
+                'filter' => ['REVIEW_ID' => $arReview['ID']],
+                'select' => ['MARK', 'CODE']
+            ]);
+
+            if(!empty($arReview['FILES'])) {
+                $arFilesId = explode(',', $arReview['FILES']);
+                
+                $arReviews[$key]['FILE_LIST'] = [];
+                
+                foreach($arFilesId as $id) {
+                    $file = $db->getList('b_files', [
+                        'filter' => ['ID' => $id]
+                    ])[0];
+
+                    $file['SRC'] = str_replace('C:/OSPanel/home/s1', '', $file['FILE_PATH']);
+
+                    $arReviews[$key]['FILE_LIST'][] = $file;
+                }
+            }
+
+            // $arReviews[$key]['TEST'] = $db->getList('b_files', [
+            //     'filter' => ['ID' => ' IN ('.$arReview['FILES'].')']
+            // ])
+
+            // WHERE ID = 1 AND ID = 2
+            // WHERE ID IN (1,2,3,4)
         }
 
         $arUsersId = array_unique($arUsersId); // [1,1,1,12,12,3,5,7]
 
         $arUsers = $db->getList('b_users', [
             'select' => ['ID', 'LOGIN'],
-            'filter' => ['ID' =>join(', ',$arUsersId)]
         ]);
 
         $this->arResult['REVIEWS'] = $arReviews;
@@ -116,6 +143,12 @@ class Component {
     private function includeTemplate(): void {
         $currentTempl = (isset($this->arParams['TEMPLATE']['VALUE'])) ? $this->arParams['TEMPLATE']['VALUE'] : $this->arParams['TEMPLATE']['DEFAULT'];
         $templateDir = __DIR__ . '/' . $currentTempl . '/';
+
+        //Core::IncludeLocale(__DIR__, $currentTempl);
+
+        // mb_language('ru');
+        // echo mb_language();
+        require($templateDir . '/lang/ru/template.php');
 
         $templateDir = str_replace('\\', '/', $templateDir);
 
