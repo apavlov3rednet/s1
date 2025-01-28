@@ -126,6 +126,10 @@ $secondFont: "Roboto", sans-serif;
             border-radius:10px;
             position:relative;
 
+            &._active {
+                border:2px dashed #dd7d2e;
+            }
+
             &:before {
                 content: "Нажмите на поле или перетащите сюда файлы для загрузки";
                 color:#ccc;

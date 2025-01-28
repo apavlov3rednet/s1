@@ -65,6 +65,7 @@
 
             <div class="file-upload">
                 <input type="file" name="FILE[]" multiple="Y">
+                <div class="status-text"></div>
             </div>
 
             <input type="submit" name="SAVE" value="Сохранить"/>
